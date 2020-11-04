@@ -72,6 +72,73 @@ void Output(char Maze[21][21], PPOINT pPlayerPos)
 	}
 }
 
+void MoveUp(char Maze[21][21], PPOINT pPlayerPos)
+{
+	if (pPlayerPos->y - 1 >= 0)
+	{
+		if (Maze[pPlayerPos->y - 1][pPlayerPos->x] != '0')
+		{
+			--pPlayerPos->y;
+		}
+	}
+}
+
+void MoveDown(char Maze[21][21], PPOINT pPlayerPos)
+{
+	if (pPlayerPos->y + 1 < 20)
+	{
+		if (Maze[pPlayerPos->y + 1][pPlayerPos->x] != '0')
+		{
+			++pPlayerPos->y;
+		}
+	}
+}
+
+void MoveLeft(char Maze[21][21], PPOINT pPlayerPos)
+{
+	if (pPlayerPos->x - 1 > 0)
+	{
+		if (Maze[pPlayerPos->y][pPlayerPos->x - 1] != '0')
+		{
+			--pPlayerPos->x;
+		}
+	}
+}
+
+void MoveRight(char Maze[21][21], PPOINT pPlayerPos)
+{
+	if (pPlayerPos->x + 1 < 20)
+	{
+		if (Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0')
+		{
+			++pPlayerPos->x;
+		}
+	}
+}
+
+void MovePlayer(char Maze[21][21], PPOINT pPlayerPos, char cInput)
+{
+	switch (cInput)
+	{
+	case 'w':
+	case 'W':
+		MoveUp(Maze, pPlayerPos);
+		break;
+	case 's':
+	case 'S':
+		MoveDown(Maze, pPlayerPos);
+		break;
+	case 'a':
+	case 'A':
+		MoveLeft(Maze, pPlayerPos);
+		break;
+	case 'd':
+	case 'D':
+		MoveRight(Maze, pPlayerPos);
+		break;
+	}
+}
+
 int main() {
 
 	char strMaze[21][21] = {};
@@ -92,6 +159,8 @@ int main() {
 
 		if (cInput == 'q' || cInput == 'Q')
 			break;
+
+		MovePlayer(strMaze, &tPlayerPos, cInput);
 	}
 
 	return 0;
