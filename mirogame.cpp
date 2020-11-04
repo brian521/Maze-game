@@ -112,7 +112,7 @@ void MoveRight(char Maze[21][21], PPOINT pPlayerPos)
 {
 	if (pPlayerPos->x + 1 < 20)
 	{
-		if (Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0' && Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0')
+		if (Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0' && Maze[pPlayerPos->y][pPlayerPos->x + 1] != '4')
 		{
 			++pPlayerPos->x;
 		}
@@ -141,12 +141,21 @@ void MovePlayer(char Maze[21][21], PPOINT pPlayerPos, char cInput)
 		break;
 	}
 }
-void CreateBomb(char Maze[21][21], const PPOINT pPlayer)
+void CreateBomb(char Maze[21][21], const PPOINT pPlayer, PPOINT pBombArr, int*pBombCount)
 {
+	if (*pBombCount == 5)
+		return;
+
+	for (int i = 0; i < *pBombCount; i++)
+	{
+		if (pPlayer->x == pBombArr[i].x && pPlayer->y == pBombArr[i].y)
+			return;
+	}
+	pBombArr[*pBombCount] = *pPlayer;
+	++(*pBombCount);
+
 	Maze[pPlayer->y][pPlayer->x] = '4';
 }
-
-
 
 int main() {
 
@@ -155,6 +164,10 @@ int main() {
 	POINT tPlayerPos;
 	POINT tStartPos;
 	POINT tEndPos;
+
+	int iBombCount = 0;
+
+	POINT tBombPos[5];
 
 	SetMaze(strMaze, &tPlayerPos, &tStartPos, &tEndPos);
 
@@ -177,7 +190,7 @@ int main() {
 			break;
 
 		else if (cInput == 't' || cInput == 'T')
-			CreateBomb(strMaze, &tPlayerPos);
+			CreateBomb(strMaze, &tPlayerPos, tBombPos, &iBombCount);
 
 		else if (cInput == 'u' || cInput == 'U')
 		{
