@@ -157,6 +157,70 @@ void CreateBomb(char Maze[21][21], const PPOINT pPlayer, PPOINT pBombArr, int*pB
 	Maze[pPlayer->y][pPlayer->x] = '4';
 }
 
+void Fire(char Maze[21][21], PPOINT pPlayer, PPOINT pBombArr, int* pBombCount)
+{
+	for (int i = 0; i < *pBombCount; i++)
+	{
+		Maze[pBombArr[i].y][pBombArr[i].x] = '1';
+
+		if (pPlayer->x == pBombArr[i].x && pPlayer->y == pBombArr[i].y)
+		{
+			pPlayer->x = 0;
+			pPlayer->y = 0;
+		}
+
+		if (pBombArr[i].y - 1 >= 0)
+		{
+			if (Maze[pBombArr[i].y - 1][pBombArr[i].x] == '0')
+				Maze[pBombArr[i].y - 1][pBombArr[i].x] = '1';
+
+			if (pPlayer->x == pBombArr[i].x && pPlayer->y == pBombArr[i].y - 1)
+			{
+				pPlayer->x = 0;
+				pPlayer->y = 0;
+			}
+		}
+
+		if (pBombArr[i].y + 1 < 20)
+		{
+			if (Maze[pBombArr[i].y + 1][pBombArr[i].x] == '0')
+				Maze[pBombArr[i].y + 1][pBombArr[i].x] = '1';
+
+			if (pPlayer->x == pBombArr[i].x && pPlayer->y == pBombArr[i].y+1)
+			{
+				pPlayer->x = 0;
+				pPlayer->y = 0;
+			}
+		}
+
+		if (pBombArr[i].x - 1 >= 0)
+		{
+			if (Maze[pBombArr[i].y][pBombArr[i].x - 1] == '0')
+				Maze[pBombArr[i].y][pBombArr[i].x - 1] = '1';
+
+			if (pPlayer->x == pBombArr[i].x - 1 && pPlayer->y == pBombArr[i].y)
+			{
+				pPlayer->x = 0;
+				pPlayer->y = 0;
+			}
+		}
+
+		if (pBombArr[i].x + 1 < 20)
+		{
+			if (Maze[pBombArr[i].y][pBombArr[i].x + 1] == '0')
+				Maze[pBombArr[i].y][pBombArr[i].x + 1] = '1';
+
+			if (pPlayer->x == pBombArr[i].x + 1 && pPlayer->y == pBombArr[i].y)
+			{
+				pPlayer->x = 0;
+				pPlayer->y = 0;
+			}
+		}
+	}
+
+	*pBombCount = 0;
+}
+
 int main() {
 
 	char strMaze[21][21] = {};
@@ -193,9 +257,8 @@ int main() {
 			CreateBomb(strMaze, &tPlayerPos, tBombPos, &iBombCount);
 
 		else if (cInput == 'u' || cInput == 'U')
-		{
+			Fire(strMaze, &tPlayerPos, tBombPos, &iBombCount);
 
-		}
 		MovePlayer(strMaze, &tPlayerPos, cInput);
 	}
 
