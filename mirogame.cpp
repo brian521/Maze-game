@@ -154,6 +154,12 @@ int main() {
 		system("cls");
 		Output(strMaze, &tPlayerPos);
 
+		if (tPlayerPos.x == tEndPos.x && tPlayerPos.y == tEndPos.y)
+		{
+			cout << "도착했습니다." << endl;
+			break;
+		}
+
 		cout << "w : 위 s : 아래 a : 왼쪽 d : 오른쪽 q : 종료 : ";
 		char	cInput = _getch();
 
