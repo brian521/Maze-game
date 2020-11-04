@@ -1,8 +1,7 @@
-#include <iostream.h>
-
+#include <iostream>
 using namespace std;
 
-void SetMaze(char Maze[20][20])
+void SetMaze(char Maze[21][21])
 {
 	strcpy_s(Maze[0], "21100000000000000000");
 	strcpy_s(Maze[1], "00111111111100000000");
@@ -26,12 +25,36 @@ void SetMaze(char Maze[20][20])
 	strcpy_s(Maze[19], "21100000000000000000");
 }
 
+void Output(char Maze[21][21])
+{
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j < 20; j++)
+		{
+			if (Maze[i][j] == '0')
+				cout << "¡á";
+
+			else if (Maze[i][j] == '1')
+				cout << "  ";
+
+			else if (Maze[i][j] == '2')
+				cout << "¡Ú";
+
+			else if (Maze[i][j] == '3')
+				cout << "¡Ý";
+		}
+
+		cout << endl;
+	}
+}
 
 int main() {
 
-	char strMaze[20][20];
+	char strMaze[21][21] = {};
 
+	SetMaze(strMaze);
 
+	Output(strMaze);
 
 	return 0;
 }
