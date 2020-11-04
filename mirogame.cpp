@@ -52,7 +52,10 @@ void Output(char Maze[21][21], PPOINT pPlayerPos)
 	{
 		for (int j = 0; j < 20; j++)
 		{
-			if (pPlayerPos->x == j && pPlayerPos->y == i)
+			if (Maze[i][j] == '4')
+				cout << "¢Í";
+
+			else if (pPlayerPos->x == j && pPlayerPos->y == i)
 				cout << "¡Ù";
 
 			else if (Maze[i][j] == '0')
@@ -76,7 +79,7 @@ void MoveUp(char Maze[21][21], PPOINT pPlayerPos)
 {
 	if (pPlayerPos->y - 1 >= 0)
 	{
-		if (Maze[pPlayerPos->y - 1][pPlayerPos->x] != '0')
+		if (Maze[pPlayerPos->y - 1][pPlayerPos->x] != '0' && Maze[pPlayerPos->y - 1][pPlayerPos->x] != '4')
 		{
 			--pPlayerPos->y;
 		}
@@ -87,7 +90,7 @@ void MoveDown(char Maze[21][21], PPOINT pPlayerPos)
 {
 	if (pPlayerPos->y + 1 < 20)
 	{
-		if (Maze[pPlayerPos->y + 1][pPlayerPos->x] != '0')
+		if (Maze[pPlayerPos->y + 1][pPlayerPos->x] != '0' && Maze[pPlayerPos->y + 1][pPlayerPos->x] != '4')
 		{
 			++pPlayerPos->y;
 		}
@@ -98,7 +101,7 @@ void MoveLeft(char Maze[21][21], PPOINT pPlayerPos)
 {
 	if (pPlayerPos->x - 1 > 0)
 	{
-		if (Maze[pPlayerPos->y][pPlayerPos->x - 1] != '0')
+		if (Maze[pPlayerPos->y][pPlayerPos->x - 1] != '0' && Maze[pPlayerPos->y][pPlayerPos->x - 1] != '4')
 		{
 			--pPlayerPos->x;
 		}
@@ -109,7 +112,7 @@ void MoveRight(char Maze[21][21], PPOINT pPlayerPos)
 {
 	if (pPlayerPos->x + 1 < 20)
 	{
-		if (Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0')
+		if (Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0' && Maze[pPlayerPos->y][pPlayerPos->x + 1] != '0')
 		{
 			++pPlayerPos->x;
 		}
@@ -138,6 +141,12 @@ void MovePlayer(char Maze[21][21], PPOINT pPlayerPos, char cInput)
 		break;
 	}
 }
+void CreateBomb(char Maze[21][21], const PPOINT pPlayer)
+{
+	Maze[pPlayer->y][pPlayer->x] = '4';
+}
+
+
 
 int main() {
 
@@ -160,12 +169,20 @@ int main() {
 			break;
 		}
 
+		cout << "t : ÆøÅº¼³Ä¡ u : ÆøÅº ÅÍÆ®¸®±â" << endl;
 		cout << "w : À§ s : ¾Æ·¡ a : ¿ÞÂÊ d : ¿À¸¥ÂÊ q : Á¾·á : ";
 		char	cInput = _getch();
 
 		if (cInput == 'q' || cInput == 'Q')
 			break;
 
+		else if (cInput == 't' || cInput == 'T')
+			CreateBomb(strMaze, &tPlayerPos);
+
+		else if (cInput == 'u' || cInput == 'U')
+		{
+
+		}
 		MovePlayer(strMaze, &tPlayerPos, cInput);
 	}
 
